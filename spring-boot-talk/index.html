@@ -45,13 +45,15 @@
 				<section>
 					<section>
 						<h1>Spring Boot</h1>
-						<h3>Spring made easy</h3>
+						<h3>Spring made easy*</h3>
 						<h4>&quot;More Spring, Less Configuration&quot;</h4>
 						<p>
 							<small>Created by <a href="#">Benjamin Baxter</a></small>
 							<br>
 							<small><a href="https://github.com/benbaxter/cinjug-spring-boot">Talk and examples on Github</a></small>
 						</p>
+						<br><br><br><br>
+						<p><small>*Could it get any easier?</small></p>
 					</section>
 
 					<section>
@@ -377,35 +379,35 @@ dependencies {
 						<ul>
 							<li style="max-width: 40%; float: left;">Setup
 								<ul>
-									<li>/autoconfig
+									<li><a href="http://localhost:8080/autoconfig" target="_blank">/autoconfig</a>
 										<ul><li style="font-size: .6em;">Shows the reason why config "was" or "was not" applied.</li></ul>
 									</li>
-									<li>/beans
+									<li><a href="http://localhost:8080/beans" target="_blank">/beans</a>
 										<ul>
 											<li style="font-size: .6em;">List all beans.</li>
 											<li style="font-size: .6em;">Proof of a downside...</li>
 										</ul>
 									</li>
-									<li>/mapping
+									<li><a href="http://localhost:8080/mappings" target="_blank">/mappings</a>
 										<ul><li style="font-size: .6em;">list of all <code class="java">@RequestMapping</code> paths.</li></ul>
 									</li>
 								</ul>
 							</li>
 							<li style="max-width: 40%; float: right;">Runtime
 								<ul>
-									<li>/health
+									<li><a href="http://localhost:8080/health" target="_blank">/health</a>
 										<ul><li style="font-size: .6em;">Shows status, kind of stupid</li></ul>
 									</li>
-									<li>/env
+									<li><a href="http://localhost:8080/env" target="_blank">/env</a>
 										<ul><li style="font-size: .6em;">Self explainatory...</li></ul>
 									</li>
-									<li>/dump
+									<li><a href="http://localhost:8080/dump" target="_blank">/dump</a>
 										<ul><li style="font-size: .6em;">Performs a thread dump.</li></ul>
 									</li>
-									<li>/metrics
+									<li><a href="http://localhost:8080/metrics" target="_blank">/metrics</a>
 										<ul><li style="font-size: .6em;">Like analytics</li></ul>
 									</li>
-									<li>/trace
+									<li><a href="http://localhost:8080/trace" target="_blank">/trace</a>
 										<ul><li style="font-size: .6em;">Last few HTTP requests</li></ul>
 									</li>
 								</ul>
@@ -686,7 +688,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 						<h3>Guestbook v3</h3>
 						<div>
 							<p style="font-size: .8em;">Web is cool but how about upgrading that in memory serivce?</p>
-							<p style="font-size: .8em;">I used spring-data-jpa, but you can use spring-jdbc it you prefer.</p>
+							<p style="font-size: .8em;">I used spring-data-jpa, but you can use spring-jdbc if you prefer.</p>
 							<pre><code style="max-height: 90%;">
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -845,7 +847,7 @@ public class GuestBookRepositoryService implements GuestBookService {
 								<a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-web-secure">Secure</a>
 								<br><br>Could not get it to work when I tried. 
 								<br>If I put more time into it, I probably could.
-								<br>Defeated :(
+								<br>#defeated:(
 								<br><br>
 								For the most part it was JavaConfig from 3.1 with a few hooks
 							</div>
