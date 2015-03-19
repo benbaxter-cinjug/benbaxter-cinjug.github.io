@@ -1,0 +1,31 @@
+{
+  "name": "gulp.js-talk",
+  "version": "1.0.0",
+  "description": "A presentation on gulp and friends",
+  "homepage": "http://benbaxter-cinjug.github.io/gulp-talk/",
+  "subdomain": "benbaxter-cinjug",
+  "scripts": {
+    "start": ""
+  },
+  "author": {
+    "name": "Benjamin Baxter",
+    "email": "benjamin.g.baxter@gmail.com",
+    "web": "http://benjamingbaxter.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benbaxter-cinjug/benbaxter-cinjug.github.io.git"
+  },
+  "engines": {
+    "node": "~0.10.26"
+  },
+  "dependencies": {
+    "underscore": "~1.5.1",
+    "express": "~2.5.9",
+    "mustache": "~0.7.2",
+    "socket.io": "~0.9.13"
+  },
+  "devDependencies": {
+    
+  }
+}

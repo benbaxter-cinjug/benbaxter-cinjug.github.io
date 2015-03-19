@@ -1,0 +1,11 @@
+
+If you have a proxy, check out how to configure bower to deal with the pain of proxys here:
+http://bower.io/docs/config/
+
+note that is you want this file to work, rename it to .bowerrc and make sure it is a valid JSON document
+{
+	"directory": "app/components/"
+	"strict-ssl": false,
+	"proxy" : "your coperate proxy",
+	"https-proxy" : "your coperate proxy"
+}

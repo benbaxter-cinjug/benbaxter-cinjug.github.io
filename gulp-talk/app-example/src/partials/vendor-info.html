@@ -1,0 +1,117 @@
+<div>
+
+        
+        <md-card>
+        	<md-toolbar md-theme="green">
+		      <h2 class="md-toolbar-tools">
+		        <span>Search</span>
+		      </h2>
+		    </md-toolbar>
+
+			<md-content class="md-padding">
+	        	<form name="venderSearchForm">
+	        		<div layout layout-sm="column">
+			      		<md-input-container flex>
+				      	  <md-text-float label="Vendor" required name="vendor" ng-model="criteria.vendor"></md-text-float>
+				      	</md-input-container>
+				        <md-input-container flex>
+				        	<md-text-float label="Vendor ID" required name="vendorId" ng-model="criteria.vendorId"></md-text-float>
+				        </md-input-container>
+					</div>
+				    <div layout layout-sm="column">
+				    	<md-input-container flex>
+				    		<br><br>
+				    		<label>Vendor Type</labe>
+				        	<select ng-model="criteria.vendorType"
+				                ng-options="opt as opt.label for opt in vendorTypes">
+				                	<option value=""></option>
+				            </select>
+
+				        </md-input-container>
+				        <md-input-container flex>
+				        	<md-text-float label="Master Vendor ID" required name="masterVendorId" ng-model="criteria.masterVendorId"></md-text-float>
+				        </md-input-container>
+				    </div>
+				    <div  layout layout-sm="column">
+				    	<md-input-container layout="row">
+				        	<label flex><br>Vendor Status</label>
+					    	<div flex>
+						    	<md-checkbox aria-label="Active" ng-model="criteria.vendorStatus.active" class="md-accent">
+			    					Active
+			  					</md-checkbox>    
+						        <md-checkbox aria-label="Terminated" ng-model="criteria.vendorStatus.terminated" class="md-accent">
+			    					Terminated
+			  					</md-checkbox>
+			  				</div>
+	  					</md-input-container>
+				    </div>
+  					
+				  	<section layout="row" layout-sm="column" layout-align="center center">
+				      <md-button class="md-raised md-primary" ng-click="search()">Search</md-button> &nbsp;&nbsp;
+				      <md-button class="md-raised md-accent md-hue-1" ng-click="resetSearch()">Reset</md-button> &nbsp;&nbsp;
+				      <md-button md-theme="green" class="md-primary md-raised">Add New Vendor
+				      	<md-tooltip>
+				        Requires the Vendor Management Opt-In.
+				        <br>
+				        Need help? See Online Help.
+				      	</md-tooltip>
+				  	   </md-button>
+				    </section>
+			      
+			    </form>
+		    
+        	
+		    
+        	
+        		<p ng-hide="hasResults()">No results found. Please refine your search parameters.</p>
+        		<md-list ng-show="hasResults()">
+        		  <md-item>
+			        <md-item-content>
+			          <div class="md-tile-left">
+			              Status
+			          </div>
+			          <div class="md-tile-content" layout="row">
+			          	<div flex>
+			          		Vendor
+			          	</div>
+			          	<div flex>
+			          		Vendor Type
+			          	</div>
+			          	<div flex>
+			          		Vendor ID
+			          	</div>
+			          	<div flex>
+			          		Master Vendor ID
+			          	</div>
+			          </div>
+			        </md-item-content>
+			      </md-item>
+			      <md-item ng-repeat="item in results">
+			        <md-item-content>
+			          <div class="md-tile-left">
+			              <md-icon ng-show="item.status == 'Active'" icon="bower_components/material-design-icons/navigation/svg/production/ic_check_24px.svg"><object class="md-icon" data="bower_components/material-design-icons/navigation/svg/production/ic_check_24px.svg"></object></md-icon>
+
+			              <md-icon ng-show="item.status == 'Terminated'" icon="bower_components/material-design-icons/navigation/svg/production/ic_close_24px.svg"><object class="md-icon" data="bower_components/material-design-icons/navigation/svg/production/ic_close_24px.svg"></object></md-icon>
+			          </div>
+			          <div class="md-tile-content" layout="row">
+			          	<div flex>
+			          		{{item.name}}
+			          	</div>
+			          	<div flex>
+			          		{{item.vendorType}}
+			          	</div>
+			          	<div flex>
+			          		{{item.vendorId}}
+			          	</div>
+			          	<div flex>
+			          		{{item.masterVendorId}}
+			          	</div>
+			          </div>
+			        </md-item-content>
+			      </md-item>
+			    </md-list>
+
+        	</md-card-content>
+    	</md-card>
+
+</div>
