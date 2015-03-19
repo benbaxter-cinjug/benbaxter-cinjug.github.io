@@ -1,0 +1,91 @@
+<html>
+  <head>
+
+    <!-- Angulars Material CSS now available via Google CDN; version 0.6 used here -->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="bower_components/angular-material/themes/green-theme.css">
+    <link rel="stylesheet" href="bower_components/angular-material/themes/red-theme.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+  </head>
+  <body ng-app="cp-app">
+
+
+
+	<md-toolbar class="md-default-theme">
+
+      <div class="md-toolbar-tools">
+        <button class="menu-icon" hide-gt-sm="">
+          <md-icon icon="bower_components/material-design-icons/navigation/svg/production/ic_menu_24px.svg"><object class="md-icon" data="bower_components/material-design-icons/navigation/svg/production/ic_menu_24px.svg"></object></md-icon>
+        </button>
+
+        <div layout="row" flex="" class="fill-height">
+          Angular-Material POC
+          
+        </div>
+        <div class="md-toolbar-item md-tools" layout="row">
+           
+            <div class="md-default-theme hide" ng-class="{hide: !currentDoc}"  hide-sm="" hide-md="" style="position: relative; padding-left: 30px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+              <span class="ng-scope">Imagine this is your nav bar</span>
+            </div>
+          </div>
+      </div>
+
+    </md-toolbar>
+
+    <md-content>
+	  	<div ng-controller="MenuController" layout="column" layout-fill>
+		  <section layout="row" flex>
+		    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-md')">
+		      <md-toolbar class="md-theme-indigo" md-theme="green">
+		        <h1 class="md-toolbar-tools"><a ui-sref="home">Left Hand Nav</a></h1>
+		      </md-toolbar>
+		      <md-content class="md-padding">
+		        
+		        <div hide-md show-gt-md>
+		        	<md-list>
+				      <md-item ng-repeat="item in menu">
+				        <md-item-content>
+				          <div class="md-tile-left">
+				              <md-button class="md-primary" ui-sref="{{item.sref}}" ng-click="showComingSoonToast(item)">{{item.title}}</md-button>
+				          </div>
+				          <div class="md-tile-content">
+				          	
+				          </div>
+				        </md-item-content>
+				      </md-item>
+				    </md-list>
+		        </div>
+		      </md-content>
+		    </md-sidenav>
+		    <md-content flex class="md-padding">
+		      <div layout="column" layout-fill>
+		        <div ui-view></div>
+		      </div>
+		    </md-content>
+		   
+		    </md-sidenav>
+		  </section>
+		</div>
+	</md-content>
+
+  	
+    <!-- Angular Material Dependencies -->
+    <script src="bower_components/hammerjs/hammer.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+
+	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+
+    <script src="js/ng-app.js"></script>
+    <script src="js/ng-menu.js"></script>
+    <script src="js/ng-home.js"></script>
+    <script src="js/ng-vendor.js"></script>
+
+  </body>
+</html>	

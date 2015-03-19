@@ -1,0 +1,123 @@
+<html>
+  <head>
+
+    <!-- Angulars Material CSS now available via Google CDN; version 0.6 used here -->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="bower_components/angular-material/themes/green-theme.css">
+    <link rel="stylesheet" href="bower_components/angular-material/themes/red-theme.css">
+  </head>
+  <body ng-app="cp-app">
+
+
+
+	<md-toolbar class="md-default-theme">
+
+      <div class="md-toolbar-tools">
+        <button class="menu-icon" hide-gt-sm="">
+          <md-icon icon="bower_components/material-design-icons/navigation/svg/production/ic_menu_24px.svg"><object class="md-icon" data="bower_components/material-design-icons/navigation/svg/production/ic_menu_24px.svg"></object></md-icon>
+        </button>
+
+        
+       	<div class="md-toolbar-item md-tools" layout="row">
+	          Benjamin Baxter's CINJUG Presentations
+        </div>
+      </div>
+
+    </md-toolbar>
+
+    <md-content>
+	  	<div ng-controller="MenuController" layout="column" layout-fill>
+		  <section layout="row" flex>
+
+		    <md-content flex class="md-padding">
+		      <div layout="column" flex>
+		        
+		        <md-card class="md-whiteframe-z3">
+			      <md-card-content>
+			        <h2>Presentations</h2>
+			        <p>
+			          Examples and Presentations are on <a href="https://github.com/benbaxter-cinjug/benbaxter-cinjug.github.io">GitHub</a>
+			          <br>
+			          Presentations were created with <a href="http://lab.hakim.se/reveal-js/">reveal.js</a>.
+			        </p>
+			      </md-card-content>
+			    </md-card>
+
+
+		      </div>
+		    </md-content>
+		   
+		  </section>
+
+		  <section layout="row" flex>
+
+		    <md-content flex class="md-padding" layout="row">
+		     
+		      <div layout="column" flex>
+		        
+		        <md-card class="md-whiteframe-z3">
+			      <md-card-content>
+			      	<div layout="row" layout-align="center">
+				      	<img src="img/gulp-talk-slide.png" alt="gulp talk slide" />
+				      </div>
+			        <h2>From Java to JavaScript <span style="float:right;">March 2015</span></h2>
+			        <h3>Part 1: The Build Process</h3>
+			        <p>
+			          <a href="http://benbaxter-cinjug.github.io/gulp-talk/presentation/#/">View Prensentation</a>
+			          <br>
+
+			          Live in the land of web applications and love writing Java code that does amazing things? What do you do when pesky IE 8 doesn't let you play with the shinier technology? You tuck your tail between your legs and spend the rest of the week patching JavaScript to adhere to Bill Gate's rules! Still have to support IE 6 and have become accustomed to seeing new tools but then your spirits gets crushed because they only work with IE 30 and up? Well good news! There are some really cool JavaScript libraries that let you enjoy the 'joys' of JavaScript without the hassle of the browser. I am referring to the new world that Node.js has opened for us. 
+ 
+						We will look at gulp.js and examine how to setup a build system in JavaScript for JavaScript. We will be able to mini-fy, ugly-fy, obfuscate-fy, and french-fy our JavaScript in a self contained way! We will briefly discuss node and bower and the parallels between Java and these new shiny technologies. Now we can finally incorporate 'optimize' client side code to squeeze out a little bit more performance that we have always neglected. 
+						 
+						Even if you have to support 'legacy' versions of IE, you can still get some useful tricks and tips from this talk! I hope to see you there!
+
+
+			        </p>
+			      </md-card-content>
+			    </md-card>
+
+		      </div>
+
+		       <div layout="column" flex>
+		        
+		        <md-card class="md-whiteframe-z3">
+			      <md-card-content>
+			      	<div layout="row" layout-align="center">
+				      	<img src="img/spring-boot-slide.png" alt="spring boot talk slide" />
+				      </div>
+			        <h2>Spring Boot <span style="float:right;">July 2014</span></h2>
+			        <p>
+			          <a href="http://benbaxter-cinjug.github.io/spring-boot-talk/#/">View Presentation</a>
+
+			          <br>
+
+			          We are going to go on an adventure that no magician would allow, as we reveal a few secrets tricks. We will stroll down memory lane and laugh at how naive we, oh so many year ago, thought that xml configuration was the latest and greatest craze. Spring Boot is the next step in the spring ecosystem that will remove even more boiler plate code and make bootstrapping projects a breeze. We will be building a simple guestbook application and slowly make it look more and more like a real grown up app than just some sample 'look what I can do' application. This journey will make those who love spring and those who are just starting out to never stop believing in the magic of spring.
+
+			        </p>
+			      </md-card-content>
+			    </md-card>
+
+
+		      </div>
+		    </md-content>
+		   
+		  </section>
+
+		</div>
+	</md-content>
+
+  	
+    <!-- Angular Material Dependencies -->
+    <script src="bower_components/hammerjs/hammer.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+
+	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+
+  </body>
+</html>	
