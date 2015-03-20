@@ -79,7 +79,7 @@
 				
 				<section>
 					<section>
-						<h2>History</h2>
+						<h2>The Past</h2>
 						<div>
 							In the begining there were Java web developers and IE
 							<ul>
@@ -142,18 +142,18 @@
 					</section>
 					
 					<section>
-						<h2>Future*</h2>
+						<h2>Present / Future</h2>
 						<p>
 							<ul style="list-style: none;">
 								<li>METEOR</li>
 								<li>Databases &rarr; MongoDB</li>
 								<li>Mobile &rarr; Crossplatform soltuions</li>
-								<li>MEAN.IO
+								<li>MEAN.IO <span style="font-size: x-large">(why not <em>name.js</em>? why so <em>mean</em>?)</span>
 									<ul style="list-style: none;"> 
-										<li>&#x21B3; MongoDB</li>
-										<li>&#x21B3; Express &#x21C6; spring-mvc</li>
-										<li>&#x21B3; Angular &#x21C6; client-side-mvc</li>
-										<li>&#x21B3; Node &nbsp;&nbsp;&nbsp;&nbsp;&#x21C6; server</li>
+										<li>&#x21B3; <em>M</em>ongoDB</li>
+										<li>&#x21B3; <em>E</em>xpress &#x21C6; spring-mvc</li>
+										<li>&#x21B3; <em>A</em>ngular &#x21C6; client-side-mvc</li>
+										<li>&#x21B3; <em>N</em>ode &nbsp;&nbsp;&nbsp;&nbsp;&#x21C6; server</li>
 									</ul>
 								</li>
 							</ul>
@@ -200,11 +200,11 @@
 						<h2>Example App</h2>
 						<div>
 							<h4>Where to begin</h4>
-cd to /path/to/gulp-talk/app-example run the following								
+cd to <em>/path/to/gulp-talk/app-example</em> run the following								
 <pre><code data-trim contenteditable style="max-height: 100%" class="shell">
 $>npm install
 </code></pre>
-node package manager will read the package.json file to gather stuff. 
+node package manager will read the <strong>package.json</strong> file to gather stuff. 
 <br>
 This can take some time to run if its your first time.
 
@@ -351,7 +351,7 @@ Good bye!
 					<div>
 						<pre><code style="max-height: 90%;" class="javascript">
 gulp.task('move-to-www', function() {
-	gulp.src('src/*')
+	gulp.src('src/**/*')
 	  .pipe(gulp.dest('www/'));
 })						</code></pre>
 
@@ -407,463 +407,282 @@ The colon (:) is gulp convention for defining sub tasks...
 				</section>
 				
 				<section>
+					<section>
 						<h2>Dependencies</h2>
 						<div>
 						<pre><code data-trim contenteditable style="max-height: 100%" class="javascript">
-gulp.task('clean', ['clean:www', 'clean:dist', 'clean:upForDinner']);
-</code></pre>
-<br>
-<em>clean:www</em> &amp; <em>clean:dist</em> &amp; <em>clean:upForDinner</em>
-<br>will all be run before <em>clean</em>
-<br><br>
-<strong>Asynchronous</strong> so be careful
-<br><br>
-There are gulp plugins for syncronous running. 
-<ul>
+	gulp.task('clean', ['clean:www', 'clean:dist', 'clean:upForDinner']);
+	</code></pre>
+	<br>
+	<em>clean:www</em> &amp; <em>clean:dist</em> &amp; <em>clean:upForDinner</em>
+	<br>will all be run before <em>clean</em>
+	<br><br>
+	<strong>Asynchronous</strong> so be careful
+	<br><br>
+	There are gulp plugins for syncronous running. 
+	<ul>
 	<li><a href="https://www.npmjs.com/package/run-sequence">run-sequence</a> is one of them.</li>
 	<li>Manually passing around callbacks, yuck.</li>
-</ul>
-<br><br>
-Do what you like, no wrong way...
+	</ul>
+	<br><br>
+	Do what you like, no wrong way...
 
 						</div>
 					</section>
 
-				<section>	
 					<section>
-						<h3>Model and Service</h3>
+						<h2>In Practice</h2>
 						<div>
-							<pre><code style="max-height: 90%;" class="java">
-public class Person {
-	String firstName;
-	String lastName;
-}
+						<pre><code data-trim contenteditable style="max-height: 100%" class="javascript">
+gulp
+  .task('build', ['clean:www', 'compile:sass', 'minify:js', 'mv:www'])
 
-public interface GuestBookService {
-	
-	List&lt;Person&gt; getPeople();
-	
-	List&lt;Person&gt; findCertainPeople(String name);
-	
-	void addPerson(Person person);
-	
-	void deletePerson(Person person);
-}
+  .task('build:local', ['build'], function() {
+      //setup a watcher for hot deploys
+  })
+;
+	</code></pre>
+	<ul>
+		<li>Api that triggers the process for a CI server</li>
+		<li>Api for easy dev-ing</li>
+	</ul>
+	<pre><code data-trim contenteditable style="max-height: 100%" class="javascript">
+$ gulp build
+[10:46:22] Starting 'clean:www'...
+[10:46:22] Finished 'clean:www' after 198 μs
+[10:46:22] Starting 'compile:sass'...
+[10:46:22] Finished 'compile:sass' after 198 μs
+[10:46:22] Starting 'minify:js'...
+[10:46:22] Finished 'minify:js' after 198 μs
+[10:46:22] Starting 'mv:www'...
+[10:46:22] Finished 'mv:www' after 198 μs
+[10:46:22] Starting 'build'...
+[10:46:22] Finished 'build' after 198 μs
+	</code></pre>
 
-							</code></pre>
-						</div>
-					</section>
-					
-					<section>
-						<h3>Controller</h3>
-						<div>
-							<pre><code style="max-height: 90%;" class="java">
-@RestController
-public class GuestBookController {
-
-	@Autowired
-	GuestBookService service;
-	
-	@RequestMapping("/people")
-	public List&lt;Person&gt; getPeople() {...}
-
-	@RequestMapping("/people/{name}")
-	public List&lt;Person&gt; findCertainPeople(
-		@PathVariable String name) {...}
-
-	@RequestMapping(value="/people", method=PUT)
-	public List&lt;Person&gt; addPerson(
-		@RequestBody Person person) {...}
-
-	@RequestMapping(value="/people", method=DELETE)
-	public List&lt;Person&gt; deletePerson(
-		@RequestBody Person person) {...}
-	
-}
-							</code></pre>
 						</div>
 					</section>
 				</section>
-				
-				
-				
+
 				<section>
 					<section>
-						<h3>Guestbook v1</h3>
+						<h2><a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/minified-and-non-minified.md">Minification</a></h2>
 						<div>
-							<pre><code style="max-height: 90%;" class="java">
-public class InMemoryGuestBookService implements GuestBookService {
-    
-    List&lt;Person&gt; people;
-    
-    @Override
-    public List&lt;Person&gt; getPeople() {
-        if( people == null ) { people = Lists.newArrayList(); }
-        return people;
-    }
-    @Override
-    public List&lt;Person&gt; findCertainPeople(String name) {
-        return getPeople().stream()
-                .filter( p -> p.getFullName().contains(name) )
-                .collect(Collectors.toList());
-    }
-    @Override
-    public void addPerson(Person person) {
-        getPeople().add(person);
-    }
-    @Override
-    public void deletePerson(Person person) {
-        getPeople().remove(person);
-    }	
-}
-							</code></pre>
+							<em>gulp-rename</em> &amp; <em>gulp-uglify</em>.
+							<pre><code data-trim contenteditable style="max-height: 100%" class="json">
+	"dependencies": {
+	    "gulp-rename" : "1.2.0",
+	    "gulp-uglify" : "1.1.0"
+	  }					</code></pre>
+	  <pre><code data-trim contenteditable style="max-height: 100%" class="shell">
+	npm install</code></pre>
 						</div>
+	<pre><code data-trim contenteditable style="max-height: 100%" class="javascript">
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+
+gulp.task('minify:js', function() {
+	gulp.src('src/js/**/*.js')
+	    // This will output the non-minified version
+	    .pipe(gulp.dest("stage/js/"))
+	    // This will minify and rename to *.min.js
+	    .pipe(uglify())
+	    .pipe(rename({ extname: '.min.js' }))
+	    .pipe(gulp.dest("stage/js/"));
+})
+	</code></pre>
+
+
 					</section>
-					
 					<section>
-						<h3>Guestbook v1 Config</h3>
+						<h2>Folder Structure</h2>
+						<h5>ls -a</h5>
 						<div>
-							<pre><code style="max-height: 90%;" class="java">
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan
-@EnableWebMvc
-public class AppConfig {
+<pre><code data-trim contenteditable style="max-height: 100%" class="java">
+/src/js/ng-app.js
+/src/js/ng-home.js
 
-    @Bean
-    public GuestBookService guestBookService() {
-        return new InMemoryGuestBookService();
-    }		
-}
+/stage/js/ng-app.js
+/stage/js/ng-app.min.js
+/stage/js/ng-home.js
+/stage/js/ng-app.min.js
 
-...
-
-public class AppRunner {
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(AppConfig.class, args);
-    }
-}
-							</code></pre>
-						</div>
-					</section>
-					
-				</section>
-
-				
-				<section>
-					<section>
-						<h3>Guestbook v2</h3>
-						<div>
-						<pre class="fragment"><code data-trim contenteditable style="max-height: 100%" class="xml">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-<project>
-...
-<dependencies>
-...
-	&lt;!-- Provided (for embedded war support) --&gt;
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-tomcat</artifactId>
-		<scope>provided</scope>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.tomcat.embed</groupId>
-		<artifactId>tomcat-embed-jasper</artifactId>
-		<scope>provided</scope>
-	</dependency>
-...
-</dependencies>
-...
-</project>						
-						</code></pre>
-						</div>
-					</section>
-					
-					<section>
-						<h3>Guestbook v2 Config</h3>
-						<div>
-							<pre><code style="max-height: 90%;" class="java">
-@Configuration
-@EnableWebMvc
-@ComponentScan("io.benbaxter.guestbook.web.controller")
-public class MvcConfig extends WebMvcConfigurerAdapter {
-    
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-            .addResourceHandler("/static/**")
-            .addResourceLocations("/static/");
-    }
-}
-							</code></pre>
-						</div>
-						<div>Weird, where is a view resolver?</div>
-						<div class="fragment">
-							Magic!
-							<span class="fragment"><code class="java">@EnableWebMvc</code></span>
-							<div class="fragment">However...</div>
-						</div>
-						
-					</section>
-
-					<section>
-						<h3>Guestbook v2 Extenral Config</h3>
-						<h4>Introducing application.properties!</h4>
-						<div>
-							Where does spring think it should go?
-							<ul>
-								<li>A /config subdir of the current directory.</li>
-								<li>A classpath /config package</li>
-								<li>Current directory or classpath root</li>
-								<li>application-{profile}.properties</li>
-							</ul>
-							<div>
-							<br>
-							Some useful web properties
-							<ul>
-								<li>spring.view.prefix: /WEB-INF/jsp/</li>
-								<li>spring.view.suffix: .jsp</li>
-								<li>http.mappers.json-pretty-print=true</li>
-							</ul>
-							<br>
-							<a href="http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html">External Config</a> /
-							<a href"http://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html">How To</a>
-							</div>
-						</div>
-						
-					</section>
-
-					
-				</section>
-				
-				<section>
-					<section>
-						<h3>Guestbook v3</h3>
-						<div>
-							<p style="font-size: .8em;">Web is cool but how about upgrading that in memory serivce?</p>
-							<p style="font-size: .8em;">I used spring-data-jpa, but you can use spring-jdbc if you prefer.</p>
-							<pre><code style="max-height: 90%;">
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-							
-public interface PersonRepository extends CrudRepository&lt;Person, Long&gt;{
-	
-    List&lt;Person&gt; findByLastNameContaining(String lastName);
-
-    @Query("select p from Person p "
-        + " where p.firstName like concat ('%', :name, '%')"
-        + " or p.lastName like concat ('%', :name, '%') ")
-    List&lt;Person&gt; findByFullName(@Param("name") String name);
-    
-}
-							</code></pre>
-						</div>
-					</section>
-					
-					<section>
-						<h3>Guestbook v3 Config</h3>
-						<div>
-							<span style="font-size: .8em;">Have to tweek our Person class real quick...</span>
-							<pre><code class="java">
-@Entity
-public class Person {
-    @Id  @GeneratedValue( strategy = GenerationType.AUTO )
-    private long id;
-    ...
-}
-							</code></pre>
-							
-							<span style="font-size: .8em;">Just in case your repos or entities do not just magically appear...</span>
-							<pre><code class="java">
-@EnableJpaRepositories( 
-	basePackageClasses = { PersonRepository.class } )
-@EntityScan( basePackageClasses = Person.class )
-public class RepositoryConfig { /* No need for anything */ }
-							</code></pre>
-							<span style="font-size: .8em;">If your component scanning is setup correctly, you should not need this.</span>
-						</div>
-						<div style="font-size: .8em;">
-							<code class="java">@EnableAutoConfiguration</code>
-							<span>should be all you need.</span>
-						</div>				
-						
-					</section>
-					
-					<section>
-						<h4>Guestbook v3 Datasources</h4>
-						<div>
-							<div style="font-size: .8em;">Remember the conditions from before? Let's re-vamp our AppConfig</div>
-<pre><code style="max-height: 80%;">import org.h2.Driver;
-
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan
-@Import( RepositoryConfig.class )
-public class AppConfig {
-
-    @Autowired PersonRepository personRepository;
-	
-    @ConditionalOnMissingClass( name = "org.h2.Driver" )
-    @Bean( name = "guestBookService" )
-    public GuestBookService inMemoryGuestBookService() {
-        return new InMemoryGuestBookService();
-    }
-	
-    @ConditionalOnClass( value = Driver.class )
-    @Bean( name = "guestBookService" )
-    public GuestBookService h2GuestBookService() {
-        return new GuestBookRepositoryService(personRepository);
-    }
-}</code></pre>
-						</div>
-					</section>
-					
-						<section>
-						<h4>Guestbook v3 H2 Service</h4>
-						<div>
-							<div style="font-size: .8em;">What was GuestBookRepositoryService?</div>
-<pre><code style="max-height: 80%;">
-public class GuestBookRepositoryService implements GuestBookService {
-
-    PersonRepository repository;
-	
-    GuestBookRepositoryService(PersonRepository repository) {
-        this.repository = repository;
-    }
-	
-    List&lt;Person&gt; getPeople() { return repository.findAll(); }
- 
-    @Override
-    List&lt;Person&gt; findCertainPeople(String name) {
-        return repository.findByFullName(name);
-    }
-
-    @Override @Transactional
-    void addPerson(Person person) { repository.save(person); }
-
-    @Override @Transactional
-    void deletePerson(Person person) { repository.delete(person); }
-}
+/www/
 </code></pre>
+						<h5>Results</h5>
+						<div>
+							/stage/js/ng-app.min.js
+<pre><code data-trim contenteditable style="max-height: 100%" class="java">
+var app=angular.module("cp-app",["ngMaterial","ui.router","ngResource"]);app.config(["$stateProvider","$urlRouterProvider","$httpProvider",function(o,r){r.otherwise("/home"),o.state("home",{url:"/home",templateUrl:"partials/home.html",controller:"HomeController"}).state("vendor-info",{url:"/vendor-info",templateUrl:"partials/vendor-info.html",controller:"VendorInfoController"}).state("reports",{url:"/reports",templateUrl:"partials/reports.html",controller:"HomeController"}).state("coming-soon",{url:"/coming-soon",templateUrl:"partials/coming-soon.html",controller:"HomeController"})}]);
+</code></pre>
+		
+						</div>
+						+1 Minified!
+		
 						</div>
 					</section>
-					
-					<section>
-						<h4>Guestbook v3 Datasources Sources</h4>
-						
-						<div style="font-size: .8em;">
-							So how did those names get in the demo?
-							<br>
-							<div class="fragment">
-								import.sql, data.sql, &amp; schema.sql <span style="font-size: .8em;">(in root of classpath)</span>
-							</div>
-							<div class="fragment">
-								application.properties 
-								<br>
-								<ul>
-									<li>spring.datasource.url</li>
-									<li>spring.datasource.username</li>
-									<li>spring.datasource.password</li>
-									<li>spring.datasource.driverClassName</li>
-								</ul>
-							</div>
-							<br>
-							<div class="fragment">
-								If you use an embedded database (H2, HSQL, or Derby)<br>then a default JPA database will be automatically created
-								<br><br>
-								spring.jpa.hibernate.ddl_auto: none, validate, update, create-drop
 
-							</div>
-							
-							<br>
-							<a href="http://docs.spring.io/spring-boot/docs/1.1.2.RELEASE/reference/html/boot-features-sql.html">Boot SQL Features</a>
-							/
-							<a href="http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/html/howto-database-initialization.html">Initialization</a>
-							/
-							<a href="http://docs.spring.io/spring-data/jpa/docs/1.3.0.RELEASE/reference/html/jpa.repositories.html">Spring JPA Intro</a>
-						</div>
-					
-					</section>
-					
 				</section>
 
 				<section>
 					<section>
-						<h3>Guestbook v4</h3>
+						<h2>Minification in Practice</h2>
 						<div>
-							<div style="font-size: .8em;">Do we want everyone to be able to add or delete someone?</div>
-							<div class="fragment" style="font-size: .8em;">
-								<br><br>
-								The best I can say is look at these: 
-								<a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-web-method-security">Method Level</a> /
-								<a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-web-secure">Secure</a>
-								<br><br>Could not get it to work when I tried. 
-								<br>If I put more time into it, I probably could.
-								<br>#defeated:(
-								<br><br>
-								For the most part it was JavaConfig from 3.1 with a few hooks
-							</div>
+							One script file!
+							<pre><code data-trim contenteditable style="max-height: 100%" class="json">
+	"dependencies": {
+	    "gulp-concat" : "2.5.2"
+	  }					</code></pre>
+	  <pre><code data-trim contenteditable style="max-height: 100%" class="shell">
+	npm install</code></pre>
 						</div>
-					</section>
-					<section>
-						<h3>Guestbook v4 Security</h3>
-						<h4>Authentication Manager</h4>
-						<div>
-							<div style="font-size: .7em;">
-								Out of the box, what happens?
-								<br><br>
-								Default AuthenticationManager will be created for you!
-								<br><br>
-								It contains a single user, 'user', and a random password. <br>It will be printed at INFO level on startup.
-								
-								<br><br>
-								Using default security password: 78fa095d-3f4c-48b1-ad50-e24c31d5cf35
-								
-								<br><br>
-								Kind of rough, can override it using 'security.user.password'<br>Nice use case for system to system apps?
-								
-								<br>
-								Can extend GlobalAuthenticationConfigurerAdapter to create your own AuthenticationManager.
-							</div>
-							
-						</div>
-					</section>
-					
-					<section>
-						<h3>Guestbook v4 Security</h3>
-						<h4>Global method security</h4>
-						<div>
-							<div style="font-size: .7em;">
-								Add <code class="java">@EnableGlobalMethodSecurity</code> to your <code class="java">@Configuration</code>
-								<br>
-								extend WebSecurityConfigurerAdapter and define your own
-							</div>
-							<pre><code style="max-height: 80%;">@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-@Configuration protected static class ApplicationSecurity 
-        extends WebSecurityConfigurerAdapter {
+	<pre><code data-trim contenteditable style="max-height: 100%" class="java">
+var concat = require('gulp-concat');
 
-    @Override public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/static/**");
-    }
+gulp.task('minify:js', function() {
+	gulp.src('src/js/**/*.js')
+	    // This will output the non-minified version
+	    .pipe(gulp.dest("stage/js/"))
+	    // This will minify and rename to *.min.js
+	    .pipe(uglify())
+	    .pipe(concat('all.min.js'))
+	    .pipe(gulp.dest("stage/js/"));
+})
+	</code></pre>
+<pre><code data-trim contenteditable style="max-height: 100%" class="shell">
+$>gulp minify:js</code></pre>
+					</section>
+					<section>
+						<h2>Result</h2>
+						<div>
+<pre><code data-trim contenteditable style="max-height: 100%" class="java">
+/src/js/ng-app.js
+/src/js/ng-home.js
+
+/stage/js/all.min.js
+</code></pre>
+						<div>
+							/stage/js/all.min.js
+<pre><code data-trim contenteditable style="max-height: 100%" class="java">
+var app=angular.module("cp-app",["ngMaterial","ui.router","ngResource"]);app.config(["$stateProvider","$urlRouterProvider","$httpProvider",function(o,r){r.otherwise("/home"),o.state("home",{url:"/home",templateUrl:"partials/home.html",controller:"HomeController"}).state("vendor-info",{url:"/vendor-info",templateUrl:"partials/vendor-info.html",controller:"VendorInfoController"}).state("reports",{url:"/reports",templateUrl:"partials/reports.html",controller:"HomeController"}).state("coming-soon",{url:"/coming-soon",templateUrl:"partials/coming-soon.html",controller:"HomeController"})}]);
+angular.module("cp-app").controller("HomeController",["$scope","$rootScope","$mdToast",function(o){o.menuDone=!0,o.vendorInfoPage=!0,o.vendorSearchDone=!0,o.vendorSearchResultsDone=!0}]);
+angular.module("cp-app").controller("MenuController",["$scope","$rootScope","$mdToast",function(o,e,n){o.menu=[{title:"Approve Vendor Contact",sref:"coming-soon"},{title:"Vendor File Status",sref:"coming-soon"},{title:"Vendor Information",sref:"vendor-info"},{title:"Release Payment File",sref:"coming-soon"},{title:"Payment File Status",sref:"coming-soon"},{title:"Payment Request History",sref:"coming-soon"},{title:"VCN Information",sref:"coming-soon"},{title:"Reports",sref:"reports"}],o.showComingSoonToast=function(o){"coming-soon"===o.sref&&n.show(n.simple().content("This feature will be coming soon!").position("").hideDelay(10))}}]);
+angular.module("cp-app").controller("VendorInfoController",["$scope","$rootScope","$mdToast","$filter",function(e){e.criteria=e.criteria||{},e.criteria.vendorStatus={active:!0,terminated:!0},e.vendorTypes=[{label:"Dynamic VCN",value:"Dynamic VCN"},{label:"Fixed VCN",value:"Fixed VCN"}],e.resetSearch=function(){e.criteria={},e.criteria.vendorStatus={active:!0,terminated:!0}},e.resetSearch(),e.results=[],e.search=function(){var t=[];angular.forEach(r(),function(r){var a=!0;a&=!e.criteria.vendor||""===e.criteria.vendor||r.name===e.criteria.vendor,a&=!e.criteria.vendorId||""===e.criteria.vendorId||r.vendorId===e.criteria.vendorId,a&=!e.criteria.masterVendorId||""===e.criteria.masterVendorId||r.masterVendorId===e.criteria.masterVendorId,a&=!e.criteria.vendorType||!e.criteria.vendorType.value||""===e.criteria.vendorType.value||r.vendorType===e.criteria.vendorType.value,e.criteria.vendorStatus&&(a&=e.criteria.vendorStatus.active&&e.criteria.vendorStatus.terminated?!0:e.criteria.vendorStatus.active&&"Active"===r.status||e.criteria.vendorStatus.terminated&&"Terminated"===r.status),a&&t.push(r)}),console.log(t),e.results=t,console.log(e.results)},e.hasResults=function(){return e.results.length>0};var r=function(){return[{id:1,name:"Allied Supplies",status:"Active",vendorId:"111222333",vendorType:"Fixed VCN",masterVendorId:"9510"},{id:2,name:"Baltic Cable Company",status:"Active",vendorId:"222444666",vendorType:"Dynamic VCN",masterVendorId:""},{id:3,name:"Johnson Technologies",status:"Active",vendorId:"999888777",vendorType:"Dynamic VCN",masterVendorId:""},{id:4,name:"Newly Added Vendor",status:"Active",vendorId:"123456789",vendorType:"Dynamic VCN",masterVendorId:""},{id:5,name:"Office Supply Company",status:"Terminated",vendorId:"444555666",vendorType:"Dynamic VCN",masterVendorId:"9510"}]}}]);
+</code></pre>
 		
-    @Override protected void configure(HttpSecurity http) {
-        http.csrf().disable().authorizeRequests()
-            .antMatchers("/login")   
-                .permitAll()
-            .antMatchers(HttpMethod.GET, "/people**")
-                .permitAll()
-            .anyRequest()            
-                .fullyAuthenticated()
-            .and().formLogin()  
-                .defaultSuccessUrl("/people.html")
-            .and().httpBasic();
-}</code></pre>
-							
+						</div>
+						+1 Mini Minification!
+		
 						</div>
 					</section>
+
 				</section>
+
+				<section>
+						<h2>Script Links change</h2>
+						<div>
+							<a href="https://www.npmjs.com/package/gulp-html-replace">gulp-html-replace</a>: 
+								"Like <em>useref</em> but done right"
+							<pre><code data-trim contenteditable style="max-height: 100%" class="json">
+	"dependencies": { "gulp-html-replace" : "1.4.4" }					</code></pre>
+	  <pre><code data-trim contenteditable style="max-height: 100%" class="shell">
+	npm install</code></pre>
+
+	<pre><code data-trim contenteditable style="max-height: 100%" class="html">
+<!-- build:js -->
+<script src="js/ng-app.js"></script>
+<script src="js/ng-menu.js"></script>
+<!-- endbuild -->
+	</code></pre>
+	<pre><code data-trim contenteditable style="max-height: 100%" class="java">
+var htmlreplace = require('gulp-html-replace');
+
+gulp.task('html', function() {
+	return gulp.src('src/index.html')    
+        .pipe(htmlreplace({ 'js' : 'js/all.min.js' }))
+        .pipe(gulp.dest('stage/'));
+})
+	</code></pre>
+	<pre><code data-trim contenteditable style="max-height: 100%" class="html">
+<script src="js/all.min.js"></script>
+	</code></pre>
+		</div>
 				
+				</section>
+
+				<section>
+						<h2>Bring it all together</h2>
+						<div>
+							
+	
+	<pre><code data-trim contenteditable style="max-height: 100%" class="java">
+gulp.task('build', gulpSequence('clean:www', 'js', 'html', 'css', 'mv'))
+	
+    .task('default', ['build']);
+	</code></pre>
+
+	<pre><code data-trim contenteditable style="max-height: 100%" class="shell">
+$ gulp build
+[23:41:19] Starting 'build'...
+[23:41:19] Starting 'clean:www'...
+[23:41:19] Finished 'clean:www' after 314 ms
+[23:41:19] Starting 'js'...
+[23:41:19] Finished 'js' after 25 ms
+[23:41:19] Starting 'html'...
+[23:41:19] Finished 'html' after 7.41 μs
+[23:41:19] Starting 'css'...
+[23:41:23] Finished 'css' after 3.22 s
+[23:41:23] Starting 'mv'...
+[23:41:23] Finished 'mv' after 6.15 ms
+[23:41:23] Finished 'build' after 3.59 s
+	</code></pre>
+
+						<em>gulpSequence?</em>
+						<br>
+						<span class="fragment">Sometimes async is tough</span>
+						</div>
+				
+				</section>
+
+				<section>
+					<section>
+						<h2>Lessons Learned</h2>
+						<ul>
+							<li>async is tough. 
+								<ul><li>Order <em>can</em> matter during a build</li></ul>
+							</li>
+							<li>Plugins for everything</li>
+							<li>Too many plugins...</li>
+							<li>Often two or three plugins to replace 'old' ones</li>
+							<li><em>gulp-clean</em> vs. <em>gulp-rimraf</em> vs. <em>del</em></li>
+							<li><em>gulp-merge</em> vs. <em>gulp-sequence</em></li>
+							<li>Many uses, can do about anything</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Helpful Plugins</h2>
+						<ul>
+							<li>css/sass/less plugins like gulp-minify-css</li>
+							<li>gulp-shell: Run shell command</li>
+							<li>Mobile 
+								<ul>
+									<li>cordova: Run cordova commands programatically</li>
+									<li>plist: ios plist generation</li>
+								</ul>
+							<li>gulp-zip: Zip up code</li>
+							<li>
+								<a href="https://www.npmjs.com/package/gulp-load-plugins">gulp-load-plugins</a>
+								a.k.a plugin abstraction
+							</li>
+							<li>jshint plugin</li>
+							<li>karma and testing plugins</li>
+						</ul>
+
+					</section>
+				</section>		
+
 				<section>
 					<h1>THE END</h1>
 					<h3>Thanks for coming!</h3>
@@ -872,9 +691,19 @@ public class GuestBookRepositoryService implements GuestBookService {
 						<h4>Sources</h4>
 						<a href="https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md">Gulp Getting Started</a>
 						<br>
+						<a href="https://github.com/gulpjs/gulp/tree/master/docs/recipes">Recipes</a>
+						<br>
+						<a href="http://gulpjs.com/plugins/">Gulp Plugins</a>
+						<br>
 						<a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/delete-files-folder.md">gulp del</a>
 						<br>
 						<a href="https://www.npmjs.com/package/run-sequence">run-sequence</a>
+						<br>
+						<a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/minified-and-non-minified.md">Minification</a>
+						<br>
+						<a href="https://www.npmjs.com/package/gulp-html-replace">gulp-html-replace<a>
+						<br>
+						<a href="https://www.npmjs.com/package/gulp-sequence">gulp-sequence</a>
 					</div>
 				</section>
 
@@ -917,3 +746,4 @@ public class GuestBookRepositoryService implements GuestBookService {
 
 	</body>
 </html>
+
